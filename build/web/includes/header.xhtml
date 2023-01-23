@@ -1,0 +1,78 @@
+ 
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+     <style>
+        @media (max-width: 380px)
+        {
+            
+        .navbar-brand-box {
+    display: inherit;
+}}
+        #datatable_wrapper{
+            overflow: scroll;
+        }
+    </style>
+    <h:outputText style="display: none"  id="checkLogin" value="#{CurrentUser.getId()}"  class="form-label loginOutput"/>
+    <script>
+        (function () {
+
+            var x = document.getElementById("checkLogin").innerHTML;
+
+            if (x == 0) {
+                window.location.href = "login.xhtml";
+            }
+        })();
+
+    </script>
+    <header id="page-topbar">
+        <div class="navbar-header">
+            <div class="container-fluid">
+                <div class="float-end" >
+                    <div class="dropdown d-inline-block" >
+                        <a title="My Profile" style="padding: 18px 14px;"  href="profile.xhtml" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                            <h:graphicImage library="images" name="#{CurrentUser.getImage()}" class="rounded-circle header-profile-user"></h:graphicImage>
+
+                            <span class="d-none d-xl-inline-block ms-1">#{CurrentUser.getfName()} #{CurrentUser.getlName()}</span>
+                        </a>
+
+                    </div>
+                    <div class="dropdown d-inline-block">
+
+                        <h:form id="form1">
+                            <h:commandLink style="padding: 21px 14px;" class="btn header-item noti-icon waves-effect" title="Log out"
+                                           actionListener="#{users.logOut()}" action="login.xhtml">
+                                <i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> Log out
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+                <div>
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="dashboard.xhtml" class="logo">
+                            <span class="logo-sm">
+                                <h:graphicImage value="resources/images/logo.png" alt="" height="25"/>
+                            </span>
+                            <span class="logo-lg">
+                                <h:graphicImage value="resources/images/logo.png" alt="" height="70"/>
+                            </span>
+                        </a>
+                    </div>
+                    <button type="button" class="btn btn-sm px-3 font-size-16 header-item toggle-btn waves-effect" onclick="show_vertical_menu()" id="vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+                    <button type="button" style="display: none" class="btn btn-sm px-3 font-size-16 header-item toggle-btn waves-effect" onclick="hide_vertical_menu()" id="vertical-menu-btn-hide">
+                            <i class="mdi mdi-close"></i>
+                        </button>
+                </div>
+                
+
+            </div>
+        </div>
+    </header> 
+</ui:composition>   

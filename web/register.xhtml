@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Login </title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="icon" href="resources/indexPageResources/images/1.png" type="image/x-icon"/>
+        <link href="resources/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+         <link href="resources/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="resources/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <style>
+            p.error_element {
+
+                color: red;
+            }
+            p.error_message {
+                margin: 10px 0;
+                padding: 5px;
+                border: solid 1px red;
+                color: red;
+            }
+        </style>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    </h:head>
+    <h:body>
+        <div class="home-btn d-none d-sm-block">
+            <a href="index.xhtml" class="text-dark"><i class="fas fa-home h2"></i></a>
+        </div>
+        <div class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-8">
+                        <div class="card overflow-hidden">
+                            <div class="bg-login text-center">
+                                <div class="bg-login-overlay"></div>
+                                <div class="position-relative">
+                                    <h5 class="text-white font-size-20">Free Register</h5>
+                                    <p class="text-white-50 mb-0">Get your free Qovex account now</p>
+                                    <a href="index.html" class="logo logo-admin mt-4">
+                                        <img src="assets/images/logo-sm-dark.png" alt="" height="30"/>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body pt-5">
+
+                                <div class="p-2">
+                                    <h:form class="form-horizontal" id="registerForm" enctype="multipart/form-data">
+                                        <div class="mb-3 row">
+                                            <div class="col-md-6">
+                                                <h:outputText value="First name" class="form-label"/>
+                                                <h:inputText  class="form-control" value="#{Client.firstname}"/>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h:outputText value="Last name" class="form-label"/>
+                                                <h:inputText class="form-control" value="#{Client.lastname}"/>
+
+                                            </div>
+
+                                        </div>
+   <div class="mb-3">
+                                            <h:outputText value="Phone" class="form-label"/>
+                                            <h:inputText class="form-control" id="phone" value="#{Client.phone}"/>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <h:outputText value="Email" class="form-label"/>
+                                            <h:inputText class="form-control" id="email" value="#{Client.email}"/>
+                                        </div>
+                                        <div class="mb-3">
+                                            <h:outputText value="Username" class="form-label"/>
+                                            <h:inputText  class="form-control" id="username" value="#{Client.username}"/>
+                                            <f:ajax  event="keyup" onevent="usernameValidate" execute="username" render="usernameValidate"/>
+
+                                            <h:outputText  id="usernameValidate" value="#{Client.checkUsername()}" escape="false" class="form-label"/>
+
+
+
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-md-6">
+                                                <h:outputText value="Password" class="form-label"/>
+                                                <h:inputText class="form-control" value="#{Client.password}"/>
+
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h:outputText value="Confirm Password" class="form-label"/>
+                                                <h:inputText class="form-control" value="#{Client.confilrmPassword}"/>
+
+                                            </div>
+
+                                        </div>
+ <div class="mb-3">
+                                            <h:outputText value="Image" class="form-label"/>
+                                            
+                                            <h:inputFile class="form-control" id="image" value="#{Client.imageFile}"/>
+                                        </div>
+
+                                        <div class="mt-3">
+                                            <h:commandButton class="btn btn-primary w-100 waves-effect waves-light" value="Register">
+                                                <f:ajax onevent="registerEvent" execute="registerForm" render="registerOutput"/>
+
+
+                                            </h:commandButton>
+
+                                            <h:outputText  id="registerOutput" value="#{Client.registerNewClient()}" escape="false" class="form-label"/>
+
+                                        </div>
+
+
+                                    </h:form>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="mt-2 text-center">
+                            <p>Already have an account ? <a href="login.xhtml" class="fw-medium text-primary">
+                                    Login</a> </p>
+                            <p>©
+                                <script>document.write(new Date().getFullYear());</script> Interstellar. 
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script src="resources/libs/jquery/jquery.min.js"></script>
+        <script src="resources/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="resources/libs/metismenu/metisMenu.min.js"></script>
+        <script src="resources/libs/simplebar/simplebar.min.js"></script>
+        <script src="resources/libs/node-waves/waves.min.js"></script>
+        <script src="resources/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+
+        <script src="resources/js/app.js"></script>
+
+        <script>
+
+                                    function registerEvent(data) {
+                                        if (data.status === 'success') {
+
+                                            let output = $('#outputResulte').html();
+                                            if (output === 'true') {
+                                                Swal.fire(
+                                                        'Register success',
+                                                        'Your login successful you will redirect to dashboard ',
+                                                        'success'
+                                                        );
+                                                setTimeout(function () {
+                                                    window.location.href = 'index.xhtml';
+                                                }, 2000);
+                                            } else {
+                                                Swal.fire(
+                                                        'Register falid',
+                                                        'Please ensure that the information is correct',
+                                                        'error'
+                                                        );
+                                            }
+                                        }
+                                    }
+                                    function usernameValidate(data) {
+                                        if (data.status === 'success') {
+
+                                            let content = $('#usernameResulte').html();
+                                            if (content !== 'true') {
+                                                $('#registerForm\\:username').css("border-color", "red");
+
+                                            } else {
+                                                $('#registerForm\\:username').css("border-color", "#ced4da");
+
+                                            }
+                                        }
+                                    }
+        </script>
+    </h:body>
+</html>
+

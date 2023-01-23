@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Dashboard | My Subscriptions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" href="resources/indexPageResources/images/1.png" type="image/x-icon"/>
+        <link href="resources/css/bootstrap.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="resources/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/app.css" id="app-style" rel="stylesheet" type="text/css" />
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+        <style>
+            .dataTables_filter .form-control,.dataTables_length .form-control{
+                display: inline;
+                width: fit-content;
+            }
+            .pagination {
+
+                justify-content: flex-end;
+            }
+            .float {
+                z-index: 999;
+                position: fixed;
+                width: 60px;
+                height: 60px;
+                bottom: 40px;
+                right:  40px;
+                background-color: #293e92;
+                color: #FFF;
+                border-radius: 50px;
+                text-align: center;
+                box-shadow: 2px 2px 3px #999;
+            }
+            .float:hover{
+                font-size: 18px;
+                color: #fff;
+            }
+            .my-float{
+                margin-top:22px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <a href="new_subscription.xhtml" title="New Subscription" class="float">
+            <i class="fa fa-plus my-float"></i>
+        </a>
+
+
+        <div class="container-fluid">
+            <!-- Begin page -->
+            <div id="layout-wrapper">
+                <ui:include src="includes/header.xhtml" />
+                <ui:include src="includes/vertical_menu_client.xhtml" />
+
+                <!--header-->
+                <!--vertical-menu-->
+
+
+                <div class="main-content">
+
+                    <div class="page-content">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="page-title mb-0 font-size-18">My Subscriptions</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="dashboard.xhtml">Home</a></li>
+                                            <li class="breadcrumb-item active">My Subscriptions</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <h:dataTable id="datatable" value = "#{Subscription.getAllMySubscriptions()}" var = "subscription"
+                                                     styleClass = "table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"
+                                                     headerClass = "employeeTableHeader"
+                                                     rowClasses = "employeeTableOddRow,employeeTableEvenRow">
+
+                                            <h:column>    				
+                                                <f:facet name = "header">Id</f:facet>    				
+                                                    #{subscription.id}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Subscription No</f:facet>
+                                                    #{subscription.SUBSCRIPTIONNO}
+                                            </h:column>
+
+ <h:column>
+                                                <f:facet name = "header">Address</f:facet>
+                                                    #{subscription.Address}
+                                            </h:column>
+
+                                            <h:column>
+                                                <f:facet name = "header">Accumulated bills</f:facet>
+                                                    #{subscription.accumulated_bills}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Options</f:facet>
+                                                <h:form id="form1">
+                                                    <div class="btn-group" role="group" style="direction: rtl;" aria-label="Basic example">
+
+                                                        <h:commandLink id="trashBtn" onmouseout="hideTooltip()" onmouseover="showTooltip()" title="If there any bil that not paided you can't trash subscription"  
+                                                                       disabled="#{Bil.CheckIfThereBilForSub(subscription.id)}"  
+                                                                       class="btn btn-danger" style="border-bottom-right-radius: 0.25rem;border-top-right-radius:0.25rem;" 
+                                                                       actionListener="#{Subscription.deleteSubscription(subscription.id)}" action="null">
+                                                            Trash <i class="mdi mdi-trash-can"/> 
+                                                        </h:commandLink>
+                                                        <h:commandLink class="btn btn-primary" actionListener="#{Subscription.goToEditPage(subscription.id)}" action="edit_subscription">
+                                                            Edit <i class="fas fa-eye"  /> 
+                                                        </h:commandLink>
+                                                        <h:commandLink class="btn btn-success"  action="#{Bil.goToBillsForSub(subscription.id)}">
+                                                            Show Bills <i class="fas fa-eye"  /> 
+                                                        </h:commandLink>
+                                                    </div>
+
+                                                </h:form>
+                                            </h:column>
+                                        </h:dataTable>
+
+                                        <div id="alertTrash" style="display: none" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <i class="mdi mdi-alert-outline me-2"></i> If there any bil that not paided you can't trash subscription
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+
+                                            </button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END layout-wrapper -->
+
+        </div>
+
+
+
+        <script src="resources/libs/jquery/jquery.min.js"></script>
+        <script src="resources/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        
+        <!-- Required datatable js -->
+        <script src="resources/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="resources/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    
+        <script src="resources/js/pages/datatables.init.js"></script>
+        <script src="resources/js/app.js"></script>
+        <script>
+                                                            function showTooltip() {
+                                                                $('#alertTrash').show();
+
+                                                            }
+                                                            function hideTooltip() {
+                                                                $('#alertTrash').hide();
+
+                                                            }
+
+
+        </script>
+    </h:body>
+</html>
+

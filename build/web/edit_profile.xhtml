@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" href="resources/indexPageResources/images/1.png" type="image/x-icon"/>
+        <link href="resources/css/bootstrap.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="resources/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/app.css" id="app-style" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+
+        <div class="container-fluid">
+            <!-- Begin page -->
+            <div id="layout-wrapper">
+
+
+                <ui:include src="includes/header.xhtml" />
+                <ui:include src="#{CurrentUser.selectAdminOrClient()}" />
+
+                <!--header-->
+                <!--vertical-menu-->
+
+
+                <div class="main-content">
+
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="page-title mb-0 font-size-18">Edit My profile</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="dashboard.xhtml">Home</a></li>
+                                            <li class="breadcrumb-item"><a href="mysubscriptions.xhtml"> My profile</a></li>
+                                            <li class="breadcrumb-item active">Edit My profile</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h:form class="form-horizontal" id="registerForm" enctype="multipart/form-data">
+                                            <div class="mb-3 row">
+                                                <div class="col-md-6">
+                                                    <h:outputText value="First name" class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Client.firstname}"/>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h:outputText value="Last name" class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Client.lastname}"/>
+
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <div class="col-md-12">
+                                                    <h:outputText value="Email " class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Client.email}"/>
+                                                </div> </div>
+                                            <div class="mb-3 row">
+                                                <div class="col-md-12">
+                                                    <h:outputText value="Phone" class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Client.phone}"/>
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3">
+                                            <h:outputText value="New image" class="form-label"/>
+                                            
+                                            <h:inputFile class="form-control" id="image" value="#{Client.imageFile}"/>
+                                            <small>if you want to change the image upload new image</small>
+                                        </div>
+                                             <div class="mb-3 row">
+                                                <div class="col-md-6">
+                                                    <h:outputText value="Password" class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Client.password}"/>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h:outputText value="Confirm password" class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Client.confilrmPassword}"/>
+
+                                                </div>
+                                             </div>
+                                             <div class="mb-3 row">
+                                                 <div class="col-md-12">
+                                                     
+                                                 
+                                                 <div id="alertTrash" class="alert alert-info alert-dismissible fade show" role="alert">
+                                                     <i class="mdi mdi-alert-outline me-2"></i> Leave empty if you don't want to change the password
+                                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+
+                                                     </button>
+                                                 </div>
+                                                 </div>
+                                             </div>
+
+
+
+
+                                            <div class="mt-3">
+                                                <h:commandButton class="btn btn-primary w-100 waves-effect waves-light" 
+                                                                 value="Edit" action="profile" 
+                                                                 actionListener="#{Client.editClient()}"> 
+                                                </h:commandButton>
+
+                                            </div>
+
+
+                                        </h:form>
+                                    </div>
+                                </div>                   
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END layout-wrapper -->
+
+        </div>
+
+
+
+  <script src="resources/libs/jquery/jquery.min.js"></script>
+        <script src="resources/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        
+        
+         <script src="resources/js/app.js"></script>
+    </h:body>
+</html>
+

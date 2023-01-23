@@ -1,0 +1,59 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+        <div class="card p-0">
+                                  <div class="col-md-12">   <div class="card-header">
+                                        My Not Paid Bills From All My Subscriptions
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <h:dataTable id="datatable" value = "#{Bil.getAllBillsForClient()}" var = "bill"
+                                                     styleClass = "table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"
+                                                     headerClass = "employeeTableHeader"
+                                                     rowClasses = "employeeTableOddRow,employeeTableEvenRow">
+
+                                            <h:column>    				
+                                                <f:facet name = "header">Id</f:facet>    				
+                                                    #{bill.billId}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Subscription No</f:facet>
+                                                    #{bill.SUBSCRIPTIONNO}
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">Client name</f:facet>    				
+                                                    #{bill.firstname} #{bill.lastname}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Value</f:facet>
+                                                    #{bill.value}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Date</f:facet>
+                                                    #{bill.BILLCREATEDAT}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Status</f:facet>
+                                                    #{bill.status}
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">Options</f:facet>
+
+                                                 <h:form id="form1">
+                                                     <h:commandLink class="btn btn-success" actionListener="#{Bil.payBill(bill.billId)}" action="dashboard">
+                                                           Pay <i class="fab fa-cc-pay" />
+                                                        </h:commandLink>
+                                                        </h:form>
+                                            </h:column>
+                                        </h:dataTable>
+                                       
+</div>
+
+                                    </div>
+                                </div>
+                                </div>
+    
+</ui:composition>
+<!-- Left Sidebar End -->

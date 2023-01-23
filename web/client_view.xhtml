@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Dashboard Clients</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" href="resources/indexPageResources/images/1.png" type="image/x-icon"/>
+        <link href="resources/css/bootstrap.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="resources/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/app.css" id="app-style" rel="stylesheet" type="text/css" />
+        <style>
+            .dataTables_filter .form-control,.dataTables_length .form-control{
+                display: inline;
+                width: fit-content;
+            }
+            .pagination {
+
+                justify-content: flex-end;
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <div class="container-fluid">
+            <!-- Begin page -->
+            <div id="layout-wrapper">
+                <ui:include src="includes/header.xhtml" />
+                <ui:include src="includes/vertical_menu.xhtml" />
+
+                <!--header-->
+                <!--vertical-menu-->
+
+
+                <div class="main-content">
+
+                    <div class="page-content">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="page-title mb-0 font-size-18">#{Client.firstname} #{Client.lastname}</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="dashboard.xhtml">Home</a></li>
+                                            <li class="breadcrumb-item"><a href="clients.xhtml">Clients</a></li>
+                                            <li class="breadcrumb-item active">#{Client.firstname} #{Client.lastname}</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" id="infoTabLink" data-bs-toggle="tab" onclick="infoTabShow()" href="#" role="tab">
+                                                    <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                    <span class="d-none d-sm-block">Client info</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-bs-toggle="tab" id="subscriptionsTabLink" onclick="subscriptionsTabShow()" href="#" role="tab">
+                                                    <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                                    <span class="d-none d-sm-block">Subscriptions</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+
+                                        <!-- Tab panes -->
+                                        <div class="tab-content p-3 text-muted">
+                                            <div class="tab-pane active" id="infoTab" role="tabpanel">
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-4">
+                                                                First Name
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                : #{Client.firstname}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-4">
+                                                                Last Name 
+                                                            </div>
+                                                            <div class="col-md-8"> 
+                                                                : #{Client.lastname}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-4">
+                                                                Email
+                                                            </div>
+                                                            <div class="col-md-8">  
+                                                                : #{Client.email}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-4">
+                                                                Username 
+                                                            </div>
+                                                            <div class="col-md-8"> 
+                                                                : #{Client.username}
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-3">
+                                                            <div class="col-md-4">
+                                                                Phone: 
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                : #{Client.phone}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h:graphicImage library="images" name="#{Client.image}"  styleClass="rounded w-100"></h:graphicImage>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="tab-pane" id="subscriptionsTab" role="tabpanel">
+                                                <h:dataTable id="datatable" value = "#{Subscription.getAllSubscriptionsForClient(Client.clienttId)}" var = "subscription"
+                                                             styleClass = "table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;"
+                                                             headerClass = "employeeTableHeader"
+                                                             rowClasses = "employeeTableOddRow,employeeTableEvenRow">
+
+                                                    <h:column>    				
+                                                        <f:facet name = "header">Id</f:facet>    				
+                                                            #{subscription.id}
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name = "header">Subscription No</f:facet>
+                                                            #{subscription.SUBSCRIPTIONNO}
+                                                    </h:column>
+                                                    <h:column>    				
+                                                        <f:facet name = "header">Client name</f:facet>    				
+                                                            #{Client.firstname} #{Client.lastname}
+                                                    </h:column>
+
+
+                                                    <h:column>
+                                                        <f:facet name = "header">Address</f:facet>
+                                                            #{subscription.Address}
+                                                    </h:column>
+                                                    <h:column>
+                                                        <f:facet name = "header">Accumulated bills</f:facet>
+                                                            #{subscription.accumulated_bills}
+                                                    </h:column>
+                                                    <!--                                            <h:column>
+                                                                                                    <h:form id="form1">
+                                                                                                        <div class="btn-group" role="group" style="direction: rtl;">
+                                                                                                            <h:commandLink class="btn btn-danger" style="border-bottom-right-radius: 0.25rem;border-top-right-radius:0.25rem;" actionListener="#{Subscription.deleteSubscription(12)}" action="clients.xhtml">
+                                                                                                               Trash <i class="mdi mdi-trash-can"  /> 
+                                                                                                            </h:commandLink>
+                                                                                                               <h:commandLink class="btn btn-primary" actionListener="#{Subscription.deleteSubscription(subscription.id)}" action="null">
+                                                                                                               Add Bil <i class="mdi mdi-plus-thick"  /> 
+                                                                                                            </h:commandLink>
+                                                                                                        </div>
+                                                                                                    </h:form>
+                                                                                                </h:column>-->
+                                                </h:dataTable>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END layout-wrapper -->
+
+        </div>
+
+
+
+        <script src="resources/libs/jquery/jquery.min.js"></script>
+        <script src="resources/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="resources/libs/metismenu/metisMenu.min.js"></script>
+        <script src="resources/libs/simplebar/simplebar.min.js"></script>
+        <script src="resources/libs/node-waves/waves.min.js"></script>
+        <script src="resources/libs/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+
+        <!-- jquery.vectormap map -->
+        <script src="resources/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="resources/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
+
+        <!-- Datatable init js -->
+
+        <script src="resources/js/app.js"></script>
+        <script>
+                                                    function subscriptionsTabShow() {
+//                                                        $('#subscriptionsTab').show();
+//                                                        $('#infoTab').hide();
+                                                        $('#subscriptionsTab').addClass("active");
+                                                        $('#infoTab').removeClass("active");
+                                                        $('#subscriptionsTabLink').addClass("active");
+                                                        $('#infoTabLink').removeClass("active");
+                                                    }
+                                                    function infoTabShow() {
+//                                                        $('#subscriptionsTab').hide();
+//                                                        $('#infoTab').show();
+                                                        $('#infoTab').addClass("active");
+                                                        $('#subscriptionsTab').removeClass("active");
+                                                        $('#subscriptionsTabLink').removeClass("active");
+                                                        $('#infoTabLink').addClass("active");
+                                                    }
+        </script>
+    </h:body>
+</html>
+

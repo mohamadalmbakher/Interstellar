@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Dashboard</title>
+       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" href="resources/indexPageResources/images/1.png" type="image/x-icon"/>
+        <link href="resources/css/bootstrap.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="resources/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/app.css" id="app-style" rel="stylesheet" type="text/css" />
+
+        <style>
+            .option{
+                width: 6%;
+                display: none;
+                margin-top: -46px;
+            }
+            .option a{
+                height: 20px;
+                opacity: .54;
+                width: 20px;
+                font-size: 20px;
+                align-items: center;
+                border: none;
+                display: inline-flex;
+                justify-content: center;
+                outline: none;
+                position: relative;
+                z-index: 0;
+                cursor: pointer;
+                list-style: none;
+                margin: 0 10px;
+            }
+            .option a:hover{
+                opacity: 1;
+            }
+            div#swal2-content {
+                text-align: left;
+            }
+            .dataTables_filter .form-control,.dataTables_length .form-control{
+                display: inline;
+                width: fit-content;
+            }
+            .pagination {
+
+                justify-content: flex-end;
+            }
+            .message-list li .col-mail-2 {
+                position: absolute;
+                top: 0;
+                right: 0;
+                left: 188px;
+                bottom: 0;
+                float: left;
+            }
+            .message-list li:hover {
+                box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+                z-index: 2;
+                border-radius: 5px;
+                background-color: #fff;
+            }
+            .message-list li {
+                direction: rtl;
+                padding-left: 25px !important;
+            }
+            .message-list li .col-mail-2 .subject {
+                left: 0;
+                right: 200px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                direction: ltr;
+                margin-left: 42px;
+            }
+            .message-list li .col-mail-2 .date {
+                right: 0;
+                width: 100px;
+                padding-right: 10px;
+            }
+            ul.message-list {
+                padding-left: 0 !important;
+            }
+
+
+        </style>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    </h:head>
+    <h:body>
+        <div class="container-fluid">
+            <!-- Begin page -->
+            <div id="layout-wrapper">
+                <ui:include src="includes/header.xhtml" />        <!--header-->
+                <ui:include src="includes/vertical_menu.xhtml" /> <!--vertical-menu-->
+           
+                <div class="main-content">
+                    <div class="page-content">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="page-title mb-0 font-size-18">Messages (Inbox)</h4>
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="dashboard.xhtml">Home</a></li>
+                                            <li class="breadcrumb-item active">Messages</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <ul class="message-list">
+                                        <ui:repeat value="#{Message.getAllMessages()}"  var="message" >
+
+
+                                            <li style="direction: rtl" class="message_item" onmouseout="hideOptions('#{message.id}')" onmouseover="showOptions('#{message.id}')">
+                                                <div class="" onclick="showMessage('#{message.fullName}', '#{message.email}', '#{message.phone}', '#{message.message}', '#{message.createdAt}')">
+                                                    <input type="hidden" value="#{message.id}"></input>
+                                                    <a href="#" class="title">  #{message.fullName}</a>
+                                                </div>
+                                                <div class="col-mail col-mail-2" onclick="showMessage('#{message.fullName}', '#{message.email}', '#{message.phone}', '#{message.message}', '#{message.createdAt}')">
+                                                    <a href="#" class="subject"><span class="teaser">#{message.message}</span>
+                                                    </a>
+                                                    <div class="date date#{message.id}">#{message.createdAt}</div>
+                                                   
+                                                </div>
+                                                 <div class="option m#{message.id}">
+                                                        <h:form id="form1">
+                                                        <h:commandLink class="" actionListener="#{Message.deleteMessage(message.id)}" action="null">
+                                                            <i class="mdi mdi-trash-can" style="color: red" />
+                                                        </h:commandLink>
+                                                        </h:form>
+                                                    </div>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END layout-wrapper -->
+
+        </div>
+
+
+        <script src="resources/libs/jquery/jquery.min.js"></script>
+        <script src="resources/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+         <script src="resources/js/app.js"></script>
+        <script>
+                                                    function showMessage(name, email, phone, message, createdAt) {
+
+                                                        Swal.fire({
+                                                            title: '<strong>Message <b>details</b></strong>',
+                                                            icon: 'info',
+                                                            html:
+                                                                    '<label class="col-md-4">From </label>: <span class="col-md-8"> ' + name + '</span><br/>' +
+                                                                    '<label class="col-md-4">Email</label>: <span class="col-md-8"> ' + email + '</span><br/>' +
+                                                                    '<label class="col-md-4">Phone</label>: <span class="col-md-8"> ' + phone + '</span><br/>' +
+                                                                    '<label class="col-md-4">Send date</label>: <span class="col-md-8"> ' + createdAt + '</span><br/>' +
+                                                                    '<label class="col-md-4">message</label>: <span class="col-md-8"> ' + message + '</span><br/>',
+                                                            showCloseButton: true,
+                                                            showCancelButton: false,
+                                                            focusConfirm: false,
+                                                            confirmButtonText:
+                                                                    'Ok'
+
+                                                        })
+
+                                                    }
+                                                    function showOptions(id) {
+                                                        $('.m' + id).show();
+                                                        $('.date' + id).css("right", "60px");
+
+                                                    }
+                                                    function hideOptions(id) {
+                                                        $('.m' + id).hide();
+                                                        $('.date' + id).css("right", "0px");
+
+                                                    }
+        </script>  
+    </h:body>
+</html>
+

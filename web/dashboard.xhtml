@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" href="resources/indexPageResources/images/1.png" type="image/x-icon"/>
+        <link href="resources/css/bootstrap.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="resources/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="resources/css/app.css" id="app-style" rel="stylesheet" type="text/css" />
+        <style>
+              .dataTables_filter .form-control,.dataTables_length .form-control{
+                display: inline;
+                width: fit-content;
+            }
+            .pagination {
+
+                justify-content: flex-end;
+            }
+        </style>
+    </h:head>
+    <h:body>
+
+        <div class="container-fluid">
+            <!-- Begin page -->
+            <div id="layout-wrapper">
+
+
+                <ui:include src="includes/header.xhtml" />
+                <ui:include src="#{CurrentUser.selectAdminOrClient()}" />
+
+                <!--header-->
+                <!--vertical-menu-->
+
+
+                <div class="main-content">
+
+                    <div class="page-content">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-flex align-items-center justify-content-between">
+                                    <h4 class="page-title mb-0 font-size-18">Dashboard</h4>
+
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="dashboard.xhtml">Home</a></li>
+                                            <li class="breadcrumb-item active">Dashboard</li>
+                                        </ol>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                                        <ui:include src="#{CurrentUser.showstatisticsSection()}" />
+
+                         <!-- start page title -->
+                        <div class="row">
+                            <div class="card p-0">
+                                <div class="col-md-12">
+                                    <div class="card-header">
+                                        Invoice Inquiry
+                                    </div>
+                                    <div class="card-body">
+                                        <h:form class="form-horizontal" id="select_accumulated_bills" >
+                                            <div class="mb-3 row">
+                                                <div class="col-md-6">
+                                                    <h:outputText value="Subscription No" class="form-label"/>
+                                                    <h:inputText  class="form-control" value="#{Bil.subscriptionNo}"/>
+
+                                                </div>
+                                                <div class="col-md-6 mt-4">
+                                                    <h:outputText value="" class="form-label"/>
+
+                                                    <h:commandButton id="loginBtn" class="btn btn-primary w-100 waves-effect waves-light" value="Send"  action="null">
+                                                        <f:ajax execute="select_accumulated_bills" render="accumulated_billsOutput"/>
+                                                    </h:commandButton>
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <div class="col-md-12">
+                                                    <h:outputText  id="accumulated_billsOutput" value="#{Bil.getAccumulatedBillsForSub()}"  class="form-label loginOutput"/>
+
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div> 
+                            
+                            <ui:include src="#{CurrentUser.showPayBillSection()}"/>
+ 
+                           
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- END layout-wrapper -->
+
+        </div>
+        <script src="resources/libs/jquery/jquery.min.js"></script>
+        <script src="resources/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Required datatable js -->
+        <script src="resources/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="resources/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+    
+        <script src="resources/js/pages/datatables.init.js"></script>
+        <script src="resources/js/app.js"></script>
+       
+    </h:body>
+</html>
+
